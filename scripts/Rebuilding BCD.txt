@@ -1,0 +1,23 @@
+bootrec /rebuildbcd
+
+-----------------------------------
+
+assign letter=V:
+format V: /fs:fat32
+
+bcdboot C:\windows /s V: /f UEFI
+
+---------------------------
+diskpart
+sel disk 0
+list vol
+sel vol 
+assign letter=
+exit
+
+cd /d B:\EFI\Microsoft\boot\
+bootrec /fixboot
+
+ren BCD BCD.bak
+
+bcdbook C:\windows /l en-us /s B: /f ALL

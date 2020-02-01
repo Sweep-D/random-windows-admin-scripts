@@ -1,0 +1,9 @@
+$password = ConvertTo-SecureString "" -AsPlainText -Force
+
+Import-PfxCertificate -FilePath C:\users\jduong\downloads\Certs\* -CertStoreLocation Cert:\LocalMachine\My -Password $password
+
+Get-ChildItem "C:\Users\jduong\downloads\Certs\" -Filter *.pfx |
+foreach-object {
+    
+    Import-PfxCertificate -FilePath $_.FullName -CertStoreLocation Cert:\LocalMachine\My -Exportable
+}

@@ -1,0 +1,3 @@
+# Change the AddDays option to go back however many days you want.
+$DateCutOff=(Get-Date).AddDays(-2)
+PS C:\Windows\system32> Get-ADUser -Filter * -Property whenCreated | Where {$_.whenCreated -gt $datecutoff} | FT Name, whenCreated -Autosize

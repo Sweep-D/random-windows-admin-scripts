@@ -1,0 +1,16 @@
+#v1.0
+
+#prompt for password to set on pfx cert
+$password = Read-Host -AsSecureString -Prompt "Pfx Password"
+
+#list directory under cert store
+$table =  Get-ChildItem -Path "cert:\localMachine\my\"
+
+#loop through all table and export to a specified location.
+foreach ($row in $table) {
+    $subject = $row.subject
+    $thumbprint = $row.thumbprint
+    $subject1 = $subject -replace ("CN=(\w+).*",'$1')
+    
+    Export-PfxCertificate -cert (Get-item -Path cert:\localMachine\my\$thumbprint) -FilePath C:\users\jduong\downloads\exportcert\$subject1.pfx -Password $password -verbose
+}
